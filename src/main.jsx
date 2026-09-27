@@ -55,7 +55,7 @@ function TiltButton({ className, children, maxTilt = 9, ...props }) {
 function Navigation() {
   return (
     <header className="site-header">
-      <a href="#inicio" className="brand">Lukas Beckman</a>
+      <a href="#inicio" className="brand">Lukas Beeckman</a>
       <nav aria-label="Navegación principal">
         <a href="#recorrido">Recorrido</a>
         <a href="#series">Series</a>
@@ -78,7 +78,7 @@ function Hero() {
         className="hero-copy"
       >
         <p className="eyebrow">Portafolio visual / catálogo de obra 2021-2026</p>
-        <h1>Lukas Beckman</h1>
+        <h1>Lukas Beeckman</h1>
         <p className="hero-subtitle">
           Artista visual joven. Óleo, gesto, figura y exploraciones materiales contemporáneas.
         </p>
@@ -241,10 +241,10 @@ function About() {
     <section className="about section muted" id="sobre">
       <div>
         <p className="eyebrow">Sobre el artista</p>
-        <h2>Lukas Beckman, 21 años.</h2>
+        <h2>Lukas Beeckman, 21 años.</h2>
       </div>
       <p>
-        Lukas Beckman construye una obra visual en la que la forma, la sensibilidad y la exploración material dialogan con una mirada joven, precisa y en expansión. Su trabajo se presenta como un archivo vivo: una búsqueda estética que combina intuición, disciplina y deseo de construir un lenguaje propio.
+        Lukas Beeckman construye una obra visual en la que la forma, la sensibilidad y la exploración material dialogan con una mirada joven, precisa y en expansión. Su trabajo se presenta como un archivo vivo: una búsqueda estética que combina intuición, disciplina y deseo de construir un lenguaje propio.
       </p>
     </section>
   );

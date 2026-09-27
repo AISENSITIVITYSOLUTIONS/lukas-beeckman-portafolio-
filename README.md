@@ -1,6 +1,6 @@
-# Lukas Beckman | Portafolio visual
+# Lukas Beeckman | Portafolio visual
 
-App web en React/Vite para presentar el catálogo de obra de Lukas Beckman como portafolio artístico, archivo visual y experiencia de galería digital.
+App web en React/Vite para presentar el catálogo de obra de Lukas Beeckman como portafolio artístico, archivo visual y experiencia de galería digital.
 
 ## Uso local
 
