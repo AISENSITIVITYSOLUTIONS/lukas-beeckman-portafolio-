@@ -237,7 +237,8 @@ h3 {
 }
 
 .hero-card img,
-.hero-card span {
+.hero-card span,
+.hero-card small {
   transform: translateZ(34px);
 }
 
@@ -254,6 +255,15 @@ h3 {
   padding-top: 12px;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.45rem;
+}
+
+.hero-card small {
+  display: block;
+  padding-top: 2px;
+  color: var(--soft-ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
 .hero-card-1 {
@@ -402,6 +412,15 @@ h3 {
   letter-spacing: 0.12em;
 }
 
+.price {
+  display: inline-block;
+  margin: 9px 0 0;
+  color: var(--ink) !important;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
 .chips {
   display: flex;
   gap: 7px;
@@ -502,6 +521,16 @@ h3 {
   transform: translateZ(28px);
 }
 
+.walk-item small {
+  display: block;
+  margin-top: 4px;
+  color: var(--soft-ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transform: translateZ(28px);
+}
+
 @keyframes drift {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -527,7 +556,7 @@ h3 {
 
 .archive-row {
   display: grid;
-  grid-template-columns: 54px 1fr 1.1fr 1fr 1.2fr;
+  grid-template-columns: 54px 1fr 1.1fr 1fr 1.2fr 0.8fr;
   gap: 14px;
   align-items: center;
   padding: 10px;
@@ -546,6 +575,11 @@ h3 {
 .archive-row span {
   color: var(--soft-ink);
   font-size: 0.88rem;
+}
+
+.archive-row .archive-price {
+  color: var(--ink);
+  font-weight: 800;
 }
 
 .about {
@@ -683,6 +717,10 @@ dd {
 
   .archive-row span:nth-of-type(n + 2) {
     display: none;
+  }
+
+  .archive-row .archive-price {
+    display: inline;
   }
 }
 

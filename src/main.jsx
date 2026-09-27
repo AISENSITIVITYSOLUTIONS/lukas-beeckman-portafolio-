@@ -57,8 +57,9 @@ function Navigation() {
     <header className="site-header">
       <a href="#inicio" className="brand">Lukas Beckman</a>
       <nav aria-label="Navegación principal">
-        <a href="#obra">Obra</a>
+        <a href="#recorrido">Recorrido</a>
         <a href="#series">Series</a>
+        <a href="#obra">Obra</a>
         <a href="#archivo">Archivo</a>
         <a href="#sobre">Sobre</a>
         <a href="#contacto">Contacto</a>
@@ -100,6 +101,7 @@ function Hero({ onOpen }) {
             <TiltButton className="hero-card-inner" onClick={() => onOpen(work)} maxTilt={11}>
               <img src={work.imagen} alt={work.titulo} />
               <span>{work.titulo}</span>
+              <small>{work.precio}</small>
             </TiltButton>
           </motion.div>
         ))}
@@ -142,6 +144,7 @@ function ArtworkCard({ work, index, onOpen }) {
           <p className="year">{work.anio}</p>
           <h3>{work.titulo}</h3>
           <p>{work.tecnica} · {work.dimensiones}</p>
+          <p className="price">{work.precio}</p>
         </div>
         <div className="chips">
           {work.etiquetas.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}
@@ -199,7 +202,7 @@ function Series() {
 function VisualWalk({ onOpen }) {
   const sequence = artworks.filter((work) => work.recorrido);
   return (
-    <section className="visual-walk section">
+    <section className="visual-walk section" id="recorrido">
       <div className="section-heading compact">
         <p className="eyebrow">Recorrido visual</p>
         <h2>Una secuencia lenta, casi cinematográfica.</h2>
@@ -209,6 +212,7 @@ function VisualWalk({ onOpen }) {
           <TiltButton key={`${work.id}-${index}`} className="walk-item" onClick={() => onOpen(work)} maxTilt={7}>
             <img src={work.imagen} alt={work.titulo} loading="lazy" />
             <span>{work.titulo}</span>
+            <small>{work.precio}</small>
           </TiltButton>
         ))}
       </div>
@@ -240,6 +244,7 @@ function Archive({ onOpen }) {
                   <span>{work.tecnica}</span>
                   <span>{work.serie}</span>
                   <span>{work.etiquetas.slice(0, 2).join(', ')}</span>
+                  <span className="archive-price">{work.precio}</span>
                 </button>
               ))}
             </div>
@@ -314,7 +319,7 @@ function ArtworkModal({ selected, setSelected }) {
                 <div><dt>Año</dt><dd>{selected.fecha}</dd></div>
                 <div><dt>Técnica</dt><dd>{selected.tecnica}</dd></div>
                 <div><dt>Dimensiones</dt><dd>{selected.dimensiones}</dd></div>
-                <div><dt>Referencia de catálogo</dt><dd>{selected.precio}</dd></div>
+                <div><dt>Precio</dt><dd>{selected.precio}</dd></div>
               </dl>
               <p>{selected.descripcion}</p>
               <div className="chips">
@@ -345,9 +350,9 @@ function App() {
       <Navigation />
       <main>
         <Hero onOpen={setSelected} />
-        <FeaturedWorks filtered={filtered} activeTag={activeTag} setActiveTag={setActiveTag} onOpen={setSelected} />
-        <Series />
         <VisualWalk onOpen={setSelected} />
+        <Series />
+        <FeaturedWorks filtered={filtered} activeTag={activeTag} setActiveTag={setActiveTag} onOpen={setSelected} />
         <Archive onOpen={setSelected} />
         <About />
         <Contact />
