@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowLeft, ArrowRight, AtSign, Mail, Phone, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,6 +9,47 @@ const tags = ['Todas', ...Array.from(new Set(artworks.flatMap((work) => work.eti
 
 function cx(...classes) {
   return classes.filter(Boolean).join(' ');
+}
+
+function useTilt(maxTilt = 9) {
+  const ref = useRef(null);
+
+  const handlePointerMove = (event) => {
+    const node = ref.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    node.style.setProperty('--rx', `${(-y * maxTilt).toFixed(2)}deg`);
+    node.style.setProperty('--ry', `${(x * maxTilt).toFixed(2)}deg`);
+    node.style.setProperty('--mx', `${((x + 0.5) * 100).toFixed(1)}%`);
+    node.style.setProperty('--my', `${((y + 0.5) * 100).toFixed(1)}%`);
+  };
+
+  const resetTilt = () => {
+    const node = ref.current;
+    if (!node) return;
+    node.style.setProperty('--rx', '0deg');
+    node.style.setProperty('--ry', '0deg');
+    node.style.setProperty('--mx', '50%');
+    node.style.setProperty('--my', '50%');
+  };
+
+  return {
+    ref,
+    onPointerMove: handlePointerMove,
+    onPointerLeave: resetTilt,
+    onPointerCancel: resetTilt,
+  };
+}
+
+function TiltButton({ className, children, maxTilt = 9, ...props }) {
+  const tilt = useTilt(maxTilt);
+  return (
+    <button className={className} {...tilt} {...props}>
+      {children}
+    </button>
+  );
 }
 
 function Navigation() {
@@ -48,18 +89,19 @@ function Hero({ onOpen }) {
       </motion.div>
       <div className="hero-stage" aria-label="Obras destacadas">
         {featured.map((work, index) => (
-          <motion.button
+          <motion.div
             key={work.id}
             className={cx('hero-card', `hero-card-${index + 1}`)}
-            onClick={() => onOpen(work)}
             initial={{ opacity: 0, rotateY: -8, y: 28 }}
             animate={{ opacity: 1, rotateY: 0, y: 0 }}
             transition={{ delay: 0.2 + index * 0.12, duration: 0.8 }}
-            whileHover={{ rotateX: 3, rotateY: -4, y: -8 }}
+            whileHover={{ y: -10, z: 42 }}
           >
-            <img src={work.imagen} alt={work.titulo} />
-            <span>{work.titulo}</span>
-          </motion.button>
+            <TiltButton className="hero-card-inner" onClick={() => onOpen(work)} maxTilt={11}>
+              <img src={work.imagen} alt={work.titulo} />
+              <span>{work.titulo}</span>
+            </TiltButton>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -92,9 +134,9 @@ function ArtworkCard({ work, index, onOpen }) {
       transition={{ duration: 0.55, delay: Math.min(index * 0.04, 0.24) }}
       className={cx('work-card', work.featureSize === 'large' && 'large', work.featureSize === 'wide' && 'wide')}
     >
-      <button className="work-image tilt" onClick={() => onOpen(work)}>
+      <TiltButton className="work-image tilt" onClick={() => onOpen(work)} maxTilt={8}>
         <img src={work.imagen} alt={work.titulo} loading="lazy" />
-      </button>
+      </TiltButton>
       <div className="work-meta">
         <div>
           <p className="year">{work.anio}</p>
@@ -140,8 +182,8 @@ function Series() {
         {curatorialGroups.map((group) => (
           <motion.article
             key={group.title}
-            className="series-card"
-            whileHover={{ y: -6, rotateX: 2 }}
+            className="series-card depth-card"
+            whileHover={{ y: -8, rotateX: 4, rotateY: -3 }}
             transition={{ duration: 0.25 }}
           >
             <span>{group.count}</span>
@@ -164,10 +206,10 @@ function VisualWalk({ onOpen }) {
       </div>
       <div className="walk-track">
         {[...sequence, ...sequence].map((work, index) => (
-          <button key={`${work.id}-${index}`} className="walk-item" onClick={() => onOpen(work)}>
+          <TiltButton key={`${work.id}-${index}`} className="walk-item" onClick={() => onOpen(work)} maxTilt={7}>
             <img src={work.imagen} alt={work.titulo} loading="lazy" />
             <span>{work.titulo}</span>
-          </button>
+          </TiltButton>
         ))}
       </div>
     </section>
