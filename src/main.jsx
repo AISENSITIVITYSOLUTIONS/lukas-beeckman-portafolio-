@@ -68,8 +68,7 @@ function Navigation() {
   );
 }
 
-function Hero({ onOpen }) {
-  const featured = artworks.filter((work) => work.destacada).slice(0, 4);
+function Hero() {
   return (
     <section className="hero section" id="inicio">
       <motion.div
@@ -88,24 +87,6 @@ function Hero({ onOpen }) {
           <a href="#archivo" className="button">Archivo</a>
         </div>
       </motion.div>
-      <div className="hero-stage" aria-label="Obras destacadas">
-        {featured.map((work, index) => (
-          <motion.div
-            key={work.id}
-            className={cx('hero-card', `hero-card-${index + 1}`)}
-            initial={{ opacity: 0, rotateY: -8, y: 28 }}
-            animate={{ opacity: 1, rotateY: 0, y: 0 }}
-            transition={{ delay: 0.2 + index * 0.12, duration: 0.8 }}
-            whileHover={{ y: -10, z: 42 }}
-          >
-            <TiltButton className="hero-card-inner" onClick={() => onOpen(work)} maxTilt={11}>
-              <img src={work.imagen} alt={work.titulo} />
-              <span>{work.titulo}</span>
-              <small>{work.precio}</small>
-            </TiltButton>
-          </motion.div>
-        ))}
-      </div>
     </section>
   );
 }
@@ -349,7 +330,7 @@ function App() {
     <>
       <Navigation />
       <main>
-        <Hero onOpen={setSelected} />
+        <Hero />
         <VisualWalk onOpen={setSelected} />
         <Series />
         <FeaturedWorks filtered={filtered} activeTag={activeTag} setActiveTag={setActiveTag} onOpen={setSelected} />

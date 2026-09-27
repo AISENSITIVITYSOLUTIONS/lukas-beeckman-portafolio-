@@ -106,11 +106,13 @@ nav a {
 
 .hero {
   min-height: calc(100svh - 70px);
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  display: flex;
   align-items: center;
-  gap: clamp(32px, 6vw, 86px);
   overflow: hidden;
+}
+
+.hero-copy {
+  max-width: 840px;
 }
 
 .eyebrow {
