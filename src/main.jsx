@@ -498,7 +498,18 @@ function Series({ lang }) {
 
 function VisualWalk({ onOpen, lang, works }) {
   const t = ui[lang];
-  const sequence = artworks.filter((work) => work.recorrido);
+  const preferredOrder = ['ushanka', 'apoco-si', 'ophelia', 'estudio-1', 'confesion'];
+  const sequence = artworks
+    .filter((work) => work.recorrido)
+    .sort((a, b) => {
+      const aIndex = preferredOrder.indexOf(a.id);
+      const bIndex = preferredOrder.indexOf(b.id);
+
+      if (aIndex === -1 && bIndex === -1) return 0;
+      if (aIndex === -1) return 1;
+      if (bIndex === -1) return -1;
+      return aIndex - bIndex;
+    });
   const localizedSequence = sequence.map((work) => works.find((item) => item.id === work.id));
   return (
     <section className="visual-walk section" id="recorrido">
